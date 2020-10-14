@@ -28,11 +28,11 @@ public class ActionCanvas extends Canvas {
 
 	private Item[] items;
 	private int itemSize = 0;
-	/*
+	
 	private final int UP = 1004; //final : 절대 변하지 않는 특정한 것을 정하고 싶을 때                               static :  변수를 인스턴스가 아닌 전역변수로 처리
 	private final int DOWN = 1005;
 	private final int LEFT = 1006;
-	private final int RIGHT = 1007;*/
+	private final int RIGHT = 1007;
 
 	public ActionCanvas() {
 		instance = this;
@@ -40,11 +40,9 @@ public class ActionCanvas extends Canvas {
 		enemy = new Enemy();
 		enemy.setMoveListener(
 				new EnemyMoveListener() {
-
 					@Override
 					public void onMove() {
-//						System.out.println("오호~!");
-
+						//						System.out.println("오호~!");
 					}
 				}
 				);
@@ -71,7 +69,6 @@ public class ActionCanvas extends Canvas {
 		itemSize = 5;
 
 		currentBoy = boy1;
-		
 	}
 
 	public void start() {
@@ -82,11 +79,6 @@ public class ActionCanvas extends Canvas {
 			public void run() {
 				// TODO Auto-generated method stub
 				while(true) {
-
-					//					enemy.update();
-					//					for(int i=0; i<boys.length; i++)
-					//						boys[i].update();
-
 					for(int i=0; i<itemSize; i++)
 						items[i].update();
 
@@ -102,7 +94,6 @@ public class ActionCanvas extends Canvas {
 						e.printStackTrace();
 					}
 				}
-
 			}
 		};
 
@@ -138,119 +129,69 @@ public class ActionCanvas extends Canvas {
 		//		}
 
 		currentBoy.move(x, y);
-
-		// ? == true 세 소년에게 모두 물었을 때 모두가 선택이 된적이 없다면.
-		// 선택된 소년을 이동 currentBoy.move(x, y);
-		//else
-		// 선택을 변경		
-
 		repaint();
 		return super.mouseDown(evt, x, y);
 	}
 
 	@Override
 	public boolean keyDown(Event evt, int key) {
-		//		System.out.println(key);
-		//		//내방법 
-		//		switch(key) {
-		//			case UP:
-		////				currentBoy.위로가();
-		//				double up= currentBoy.getY();
-		//				up-=10;
-		//				currentBoy.setY(up);
-		//				break;
-		//				
-		//			case DOWN:
-		////				currentBoy.아래로가();
-		//				double down= currentBoy.getY();
-		//				down+=10;
-		//				currentBoy.setY(down);
-		//				break;
-		//				
-		//			case LEFT:
-		////				currentBoy.왼쪽으로가();
-		//				double left= currentBoy.getX();
-		//				left-=10;
-		//				currentBoy.setX(left);
-		//				break;
-		//				
-		//			case RIGHT:
-		////				currentBoy.오른쪽으로가();
-		//				double right= currentBoy.getX();
-		//				right+=10;
-		//				currentBoy.setX(right);
-		//				break;
-		//				
-		//			default:
-		//			
-		//		}
-		//방법1
-		/*
-		double x = currentBoy.getX();
-		double y = currentBoy.getY();
-
-		switch(key) {
-		case UP:
-//			currentBoy.위로가();
+//		//방법1
+//		double x = currentBoy.getX();
+//		double y = currentBoy.getY();
+//
+//		switch(key) {
+//		case UP:
+////			currentBoy.위로가();
 //			currentBoy.move(x,y-5);
-			break;
-
-		case DOWN:
-//			currentBoy.아래로가();
+//			break;
+//
+//		case DOWN:
+////			currentBoy.아래로가();
 //			currentBoy.move(x,y+5);
-			break;
-
-		case LEFT:
-//			currentBoy.왼쪽으로가();
+//			break;
+//
+//		case LEFT:
+////			currentBoy.왼쪽으로가();
 //			currentBoy.move(x-5,y);
-			break;
-
-		case RIGHT:
-//			currentBoy.오른쪽으로가();
+//			break;
+//
+//		case RIGHT:
+////			currentBoy.오른쪽으로가();
 //			currentBoy.move(x+5,y);
-			break;
-
-		default:
-
-	}*/
+//			break;
+//
+//		default:
+//
+//	}
 		//방법2(더 객체지향스러움)
 		currentBoy.move(key);
-		
-		// 1. 보이가 frame 바깥으로 빠져나가지 않게 제한 걸어두기  => 특정 좌표일때 멈추게 하기
-			// 보이가 못움직이게 위치 제한 
-			// currentBoy.onMove()		// onMove() : boy가 특정 좌표에 위치했따를 누군가에게 알려주는 작업
-		// 2. onMove()를 구현하는 쪽에서 -> background를 움직이기
-			// canvas에서 구현 - bacground를  +1만 해보기
-		// 3. boy의 이동 방향에 따라 background 움직이기
-		
+
 		currentBoy.setMoveListener(new BackMoveListener() {
 
 			@Override
 			public void onMove() {
-				
+
 				double x = background.getX();
 				double y = background.getY();
-				//System.out.println(1);
+
+				if(key==UP &&
+						currentBoy.getHeight()>=currentBoy.getY())
+					background.move(x, y + 2);//배경이 아래로
 				
-				if(currentBoy.getY()<=72)
-					background.move(x, y + 5);//배경이 아래로
-				if(currentBoy.getY()>= 552)
-					background.move(x, y - 5);
-				if(currentBoy.getX()<= currentBoy.getWidth()/2+5 &&currentBoy.getX()>=currentBoy.getWidth()/2 -5) {
-					System.out.println(x);
-					double x2 = background.getX();
-					x2 += 5;
-					background.setX(x2);
-//					background.move(x + 5, y);
-				}
-				if(currentBoy.getX()>=315)
-					background.move(x - 5, y);                           //바운더리 필요
-
-
+				if(key==DOWN &&
+						600 - currentBoy.getHeight()<=currentBoy.getY())
+					background.move(x, y - 2);
+				
+				if(key==LEFT &&
+						currentBoy.getWidth()>=currentBoy.getX()) 
+					background.move(x + 2, y);
+				
+				if(key==RIGHT &&
+						currentBoy.getHeight()<=currentBoy.getX())
+					background.move(x - 2, y);                           
 			}
 		});
 		
-
 		return super.keyDown(evt, key);
 	}
 
@@ -278,13 +219,4 @@ public class ActionCanvas extends Canvas {
 		g.drawImage(buf, 0, 0, this);//
 	}
 }
-
-// 1. 소년을 생성할 때 위치를 초기화할 수 있게 하라.
-// 2. 세 명의 소년을 띄워라
-// 3. 사용자 입력처리 : 마우스로 클릭하면 그 위치로 1번째 소년을 이동시키시오.
-// 4. (x,y)가 소년의 좌/상단이 이동의 중심좌표가 된다. 
-//     이것을 중심/하단이 되도록 Body.paint 메소드를 수정해서 보정하시오.
-// 5. Boy 한테 좌표를 주면서 네가 선택되었니? isSelected(x, y):true/false -> true일 경우 
-//    isSelected()의 반환 값이 true 일경우 -> currentBoy.move(x, y)
-// 6. 나무, 자동차, 깡통, 로봇....이든 새로운 개체 하나를 등장시키시오.
 

@@ -45,6 +45,7 @@ public abstract class Item {
 	protected abstract Image getImage();
 	
 	public void move(double x, double y) {
+		//System.out.println(1);
 //		this.x = x;
 //		this.y = y;
 		this.dx = x;
@@ -52,10 +53,10 @@ public abstract class Item {
 
 		// 동일한 속도로 이동하는 단위벡터
 		double w = this.dx - this.x;
-		double h = this.dy - this.y;
-		double d = Math.sqrt(w*w + h*h);
+		double h = this.dy - this.y;//-1
+		double d = Math.sqrt(w*w + h*h);//1
 		this.vx = w/d*speed;
-		this.vy = h/d*speed;
+		this.vy = h/d*speed;// -1
 
 	}
 
