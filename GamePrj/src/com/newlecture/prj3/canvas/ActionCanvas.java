@@ -5,10 +5,13 @@ import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import com.newlecture.prj3.entity.BackMoveListener;
 import com.newlecture.prj3.entity.Background;
 import com.newlecture.prj3.entity.Boy;
 import com.newlecture.prj3.entity.Enemy;
+import com.newlecture.prj3.entity.EnemyMoveListener;
 import com.newlecture.prj3.entity.Item;
+import com.newlecture.prj3.entity.sje;
 
 public class ActionCanvas extends Canvas {
 
@@ -30,12 +33,21 @@ public class ActionCanvas extends Canvas {
 	private final int DOWN = 1005;
 	private final int LEFT = 1006;
 	private final int RIGHT = 1007;*/
-	
 
 	public ActionCanvas() {
 		instance = this;
 
 		enemy = new Enemy();
+		enemy.setMoveListener(
+				new EnemyMoveListener() {
+
+					@Override
+					public void onMove() {
+//						System.out.println("오호~!");
+
+					}
+				}
+				);
 
 		// Boy를 생성
 		boys = new Boy[3];
@@ -59,10 +71,10 @@ public class ActionCanvas extends Canvas {
 		itemSize = 5;
 
 		currentBoy = boy1;
+		
 	}
 
 	public void start() {
-
 
 		Runnable sub = new Runnable() {
 
@@ -77,8 +89,6 @@ public class ActionCanvas extends Canvas {
 
 					for(int i=0; i<itemSize; i++)
 						items[i].update();
-
-
 
 					repaint();
 					// -> Canvas.update() : 지우기 -> Canvas.paint(g) -> 다시 그리기
@@ -137,83 +147,111 @@ public class ActionCanvas extends Canvas {
 		repaint();
 		return super.mouseDown(evt, x, y);
 	}
-	
-	
+
 	@Override
 	public boolean keyDown(Event evt, int key) {
 		//		System.out.println(key);
-//		//내방법 
-//		switch(key) {
-//			case UP:
-////				currentBoy.위로가();
-//				double up= currentBoy.getY();
-//				up-=10;
-//				currentBoy.setY(up);
-//				break;
-//				
-//			case DOWN:
-////				currentBoy.아래로가();
-//				double down= currentBoy.getY();
-//				down+=10;
-//				currentBoy.setY(down);
-//				break;
-//				
-//			case LEFT:
-////				currentBoy.왼쪽으로가();
-//				double left= currentBoy.getX();
-//				left-=10;
-//				currentBoy.setX(left);
-//				break;
-//				
-//			case RIGHT:
-////				currentBoy.오른쪽으로가();
-//				double right= currentBoy.getX();
-//				right+=10;
-//				currentBoy.setX(right);
-//				break;
-//				
-//			default:
-//			
-//		}
+		//		//내방법 
+		//		switch(key) {
+		//			case UP:
+		////				currentBoy.위로가();
+		//				double up= currentBoy.getY();
+		//				up-=10;
+		//				currentBoy.setY(up);
+		//				break;
+		//				
+		//			case DOWN:
+		////				currentBoy.아래로가();
+		//				double down= currentBoy.getY();
+		//				down+=10;
+		//				currentBoy.setY(down);
+		//				break;
+		//				
+		//			case LEFT:
+		////				currentBoy.왼쪽으로가();
+		//				double left= currentBoy.getX();
+		//				left-=10;
+		//				currentBoy.setX(left);
+		//				break;
+		//				
+		//			case RIGHT:
+		////				currentBoy.오른쪽으로가();
+		//				double right= currentBoy.getX();
+		//				right+=10;
+		//				currentBoy.setX(right);
+		//				break;
+		//				
+		//			default:
+		//			
+		//		}
 		//방법1
 		/*
 		double x = currentBoy.getX();
 		double y = currentBoy.getY();
-		
+
 		switch(key) {
 		case UP:
 //			currentBoy.위로가();
 //			currentBoy.move(x,y-5);
 			break;
-			
+
 		case DOWN:
 //			currentBoy.아래로가();
 //			currentBoy.move(x,y+5);
 			break;
-			
+
 		case LEFT:
 //			currentBoy.왼쪽으로가();
 //			currentBoy.move(x-5,y);
 			break;
-			
+
 		case RIGHT:
 //			currentBoy.오른쪽으로가();
 //			currentBoy.move(x+5,y);
 			break;
-			
+
 		default:
-		
+
 	}*/
 		//방법2(더 객체지향스러움)
 		currentBoy.move(key);
+		
+		// 1. 보이가 frame 바깥으로 빠져나가지 않게 제한 걸어두기  => 특정 좌표일때 멈추게 하기
+			// 보이가 못움직이게 위치 제한 
+			// currentBoy.onMove()		// onMove() : boy가 특정 좌표에 위치했따를 누군가에게 알려주는 작업
+		// 2. onMove()를 구현하는 쪽에서 -> background를 움직이기
+			// canvas에서 구현 - bacground를  +1만 해보기
+		// 3. boy의 이동 방향에 따라 background 움직이기
+		
+		currentBoy.setMoveListener(new BackMoveListener() {
+
+			@Override
+			public void onMove() {
+				
+				double x = background.getX();
+				double y = background.getY();
+				//System.out.println(1);
+				
+				if(currentBoy.getY()<=72)
+					background.move(x, y + 5);//배경이 아래로
+				if(currentBoy.getY()>= 552)
+					background.move(x, y - 5);
+				if(currentBoy.getX()<= currentBoy.getWidth()/2+5 &&currentBoy.getX()>=currentBoy.getWidth()/2 -5) {
+					System.out.println(x);
+					double x2 = background.getX();
+					x2 += 5;
+					background.setX(x2);
+//					background.move(x + 5, y);
+				}
+				if(currentBoy.getX()>=315)
+					background.move(x - 5, y);                           //바운더리 필요
+
+
+			}
+		});
+		
 
 		return super.keyDown(evt, key);
-	}
-
-	@Override
-	public boolean keyUp(Event evt, int key) {
-		// TODO Auto-generated method stub
-		return super.keyUp(evt, key);
 	}
 
 	@Override

@@ -8,9 +8,6 @@ public class Program {
 		
 		Frame frame = new GameFrame();
 		
-
-		
-		
 	}
 
 }

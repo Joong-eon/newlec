@@ -18,6 +18,7 @@ public class Background extends Item{
 	private int  moving;
 	private static Image img;
 
+	
 	static {
 		try {
 			img = ImageIO.read(new File("res/space.jpg"));

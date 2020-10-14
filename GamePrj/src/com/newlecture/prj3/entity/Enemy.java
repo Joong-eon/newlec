@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 
 import com.newlecture.prj3.canvas.ActionCanvas;
 
-public class Enemy extends Item {
-
+public class Enemy extends Item { //class앞의 final이란? 해당 클래스가 상속을 할 수 없게끔 만듬(상속을 못 함)
+										//클래스 확장 이유 : 재사용, 확장, 고쳐쓰기-> 고쳐쓰는 방법 : 1.클래스확장 2.인터페이스 (고쳐쓸걸 미리 약속)
 	//	private double x;
 	//	private double y;
 	//	
@@ -20,7 +20,7 @@ public class Enemy extends Item {
 	//	private double vy;
 	//	private double dx;
 	//	private double dy;
-	//	
+	//		
 	//	private double width;
 	//	private double height;
 	//	private Image img;
@@ -31,6 +31,12 @@ public class Enemy extends Item {
 	private int timeoutForMoving = 120;
 	private Random rand;
 	private static Image img;
+	
+	private EnemyMoveListener moveListener;
+
+	public void setMoveListener(EnemyMoveListener moveListener) {
+		this.moveListener = moveListener;
+	}
 
 	static {
 		try {
@@ -57,7 +63,6 @@ public class Enemy extends Item {
 		rand = new Random();
 	}
 
-
 	//	public void move(double x, double y) {
 	////		this.x = x;
 	////		this.y = y;
@@ -81,7 +86,6 @@ public class Enemy extends Item {
 
 	public void update() {
 
-
 		timeoutForMoving--;
 		if(timeoutForMoving == 0){
 
@@ -93,7 +97,11 @@ public class Enemy extends Item {
 			int y = rand.nextInt(h)+(int)this.getHeight()/2;
 
 			this.move(x,y);
-
+			
+			//move 할 때 뭐라도 여기에서 코드를 넣고 싶지 않을까?
+			//움직일때();
+			if(moveListener != null)
+				moveListener.onMove();//제품을 만든 애가 약속을 정의->제품을 이용하는 사용자가 사용->다양하게 써먹을 수 있도록(다형성)
 
 			timeoutForMoving = rand.nextInt(60)+60;//0~59+60 // 60~119
 
@@ -137,11 +145,9 @@ public class Enemy extends Item {
 		int movIndex = getMovIndex();
 		Image img = getImg();
 
-
 		if(walkTempo == 0) {
 			movIndex++;
 			movIndex = movIndex % 12;
-
 			walkTempo = 3;
 		}
 		else
@@ -155,7 +161,6 @@ public class Enemy extends Item {
 
 		g.drawImage(img, x1, y1, x2, y2, 
 				0+offsetX, 0, 0+w+offsetX, h, ActionCanvas.instance);
-
 		setWalkTempo(walkTempo);
 		setMovIndex(movIndex);
 	}

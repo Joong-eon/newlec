@@ -45,8 +45,8 @@ public abstract class Item {
 	protected abstract Image getImage();
 	
 	public void move(double x, double y) {
-		//		this.x = x;
-		//		this.y = y;
+//		this.x = x;
+//		this.y = y;
 		this.dx = x;
 		this.dy = y;
 
