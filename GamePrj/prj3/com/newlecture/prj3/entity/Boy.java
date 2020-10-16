@@ -32,6 +32,8 @@ public class Boy extends Item {
 	private final int DOWN = 1005; //대문자로 변수를 쓰면 상수로 고정시킴
 	private final int LEFT = 1006;
 	private final int RIGHT = 1007;
+	
+	private BackMoveListener moveListener;
 
 //	private int N = 0;
 //	private int S = 0;
@@ -49,7 +51,7 @@ public class Boy extends Item {
 			e.printStackTrace();
 		}
 	}
-	private BackMoveListener moveListener;
+	
 
 	public void setMoveListener(BackMoveListener moveListener) {
 		this.moveListener = moveListener;
@@ -111,10 +113,11 @@ public class Boy extends Item {
 		this.setVy(vy);
 		this.setMovIndex(movIndex);
 
-//				if(moveListener != null) {
-//					moveListener.onMove();
-//					moveListener = null;                           //수정필요
-//				}
+		if(moveListener != null) {
+			//System.out.println(1);
+			moveListener.onMove();
+//			moveListener = null;                           
+		}
 	}
 
 	public void paint(Graphics g) {//bg

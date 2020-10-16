@@ -52,11 +52,11 @@ public abstract class Item {
 		this.dy = y;
 
 		// 동일한 속도로 이동하는 단위벡터
-		double w = this.dx - this.x;
-		double h = this.dy - this.y;//-1
-		double d = Math.sqrt(w*w + h*h);//1
-		this.vx = w/d*speed;
-		this.vy = h/d*speed;// -1
+		double w = this.dx - this.x;//0
+		double h = this.dy - this.y;//+2
+		double d = Math.sqrt(w*w + h*h);//2
+		this.vx = w/d*speed;//0
+		this.vy = h/d*speed;//1
 
 	}
 

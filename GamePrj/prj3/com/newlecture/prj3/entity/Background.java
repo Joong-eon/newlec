@@ -36,14 +36,14 @@ public class Background extends Item{
 	public Background(double x, double y, String imgSrc) {
 		super(x, y, imgSrc);
 
-		Image img = getImg();
+		//Image img = getImg();
 		//		int w = img.getWidth(ActionCanvas.instance);
 		//		System.out.println(w);
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		Image img = getImg();
+		//Image img = getImg();
 		double x = getX();
 		double y = getY();
 		int offsetY = this.offsetY;
@@ -66,6 +66,17 @@ public class Background extends Item{
 				this.move(x,y);
 
 		}
+		/*
+		if((this.getDx() - 0.1 <= this.getX() && getX() <= this.getDx() + 0.1) && 
+				(this.getDy() - 0.1 <= getY() && getY() <= this.getDy() + 0.1)) {			
+			this.setVx(0);
+			this.setVy(0);
+			this.setMovIndex(0);
+		}
+
+		this.setX(this.getX()+this.getVx());
+		this.setY(this.getY()+this.getVy());*/
+		
 	}
 
 	@Override

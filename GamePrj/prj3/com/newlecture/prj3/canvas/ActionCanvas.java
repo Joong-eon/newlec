@@ -170,28 +170,29 @@ public class ActionCanvas extends Canvas {
 
 			@Override
 			public void onMove() {
-
+			//System.out.println(2);
 				double x = background.getX();
 				double y = background.getY();
 
 				if(key==UP &&
-						currentBoy.getHeight()>=currentBoy.getY())
-					background.move(x, y + 2);//배경이 아래로
-				
+						currentBoy.getHeight()>=currentBoy.getY()) {
+					//background.move(x, y + 2);//배경이 아래로
+					background.setY(y+2);
+				}
 				if(key==DOWN &&
 						600 - currentBoy.getHeight()<=currentBoy.getY())
-					background.move(x, y - 2);
+					background.setY(y-2);
 				
 				if(key==LEFT &&
 						currentBoy.getWidth()>=currentBoy.getX()) 
-					background.move(x + 2, y);
+					background.setX(x+2);
 				
 				if(key==RIGHT &&
 						currentBoy.getHeight()<=currentBoy.getX())
-					background.move(x - 2, y);                           
+					background.setX(x-2);                          
 			}
 		});
-		
+
 		return super.keyDown(evt, key);
 	}
 
@@ -210,11 +211,6 @@ public class ActionCanvas extends Canvas {
 
 		for(int i=0; i<itemSize; i++)
 			items[i].paint(bg);
-
-		//		boy1.paint(bg);
-		//		boy2.paint(bg);//
-		//		boy3.paint(bg);
-		//		enemy.paint(bg);
 
 		g.drawImage(buf, 0, 0, this);//
 	}
