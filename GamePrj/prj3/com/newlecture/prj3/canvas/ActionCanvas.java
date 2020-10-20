@@ -4,6 +4,12 @@ import java.awt.Canvas;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import com.newlecture.prj3.entity.BackMoveListener;
 import com.newlecture.prj3.entity.Background;
@@ -25,14 +31,16 @@ public class ActionCanvas extends Canvas {
 	private Boy currentBoy;
 
 	private Background background;
+//	private Missile[] missiles;
+	int missileSize = 0;
 
 	private Item[] items;
 	private int itemSize = 0;
 	
-	private final int UP = 1004; //final : 절대 변하지 않는 특정한 것을 정하고 싶을 때                               static :  변수를 인스턴스가 아닌 전역변수로 처리
-	private final int DOWN = 1005;
-	private final int LEFT = 1006;
-	private final int RIGHT = 1007;
+//	private final int UP = 1004; //final : 절대 변하지 않는 특정한 것을 정하고 싶을 때                               static :  변수를 인스턴스가 아닌 전역변수로 처리
+//	private final int DOWN = 1005;
+//	private final int LEFT = 1006;
+//	private final int RIGHT = 1007;
 
 	public ActionCanvas() {
 		instance = this;
@@ -42,7 +50,7 @@ public class ActionCanvas extends Canvas {
 				new EnemyMoveListener() {
 					@Override
 					public void onMove() {
-						//						System.out.println("오호~!");
+						//System.out.println("오호~!");
 					}
 				}
 				);
@@ -69,7 +77,29 @@ public class ActionCanvas extends Canvas {
 		itemSize = 5;
 
 		currentBoy = boy1;
+		
+		addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int code = e.getKeyCode();
+						
+						switch(code){
+						case KeyEvent.VK_LEFT :
+						case KeyEvent.VK_UP :
+						case KeyEvent.VK_RIGHT :
+						case KeyEvent.VK_DOWN :
+							currentBoy.move(code);
+							break;
+						case KeyEvent.VK_SPACE : 
+//							Missile.missile = currentBoy.fire();
+				}
+				currentBoy.move(e.getKeyCode());
+				System.out.printf("KeyCode : %d\n", e.getKeyCode());
+			}
+		}); 
 	}
+
 
 	public void start() {
 
@@ -99,6 +129,9 @@ public class ActionCanvas extends Canvas {
 
 		Thread th = new Thread(sub);
 		th.start();
+		
+		//억지로 끝내지말고, while문을 사용하여 자연스럽게 끝낼 수 있도록 만들기
+		//th.stop();
 
 	}
 
@@ -133,68 +166,68 @@ public class ActionCanvas extends Canvas {
 		return super.mouseDown(evt, x, y);
 	}
 
-	@Override
-	public boolean keyDown(Event evt, int key) {
-//		//방법1
-//		double x = currentBoy.getX();
-//		double y = currentBoy.getY();
+//	@Override
+//	public boolean keyDown(Event evt, int key) {
+////		//방법1
+////		double x = currentBoy.getX();
+////		double y = currentBoy.getY();
+////
+////		switch(key) {
+////		case UP:
+//////			currentBoy.위로가();
+////			currentBoy.move(x,y-5);
+////			break;
+////
+////		case DOWN:
+//////			currentBoy.아래로가();
+////			currentBoy.move(x,y+5);
+////			break;
+////
+////		case LEFT:
+//////			currentBoy.왼쪽으로가();
+////			currentBoy.move(x-5,y);
+////			break;
+////
+////		case RIGHT:
+//////			currentBoy.오른쪽으로가();
+////			currentBoy.move(x+5,y);
+////			break;
+////
+////		default:
+////
+////	}
+//		//방법2(더 객체지향스러움)
+//		currentBoy.move(key);
 //
-//		switch(key) {
-//		case UP:
-////			currentBoy.위로가();
-//			currentBoy.move(x,y-5);
-//			break;
+//		currentBoy.setMoveListener(new BackMoveListener() {
 //
-//		case DOWN:
-////			currentBoy.아래로가();
-//			currentBoy.move(x,y+5);
-//			break;
+//			@Override
+//			public void onMove() {
+//			//System.out.println(2);
+//				double x = background.getX();
+//				double y = background.getY();
 //
-//		case LEFT:
-////			currentBoy.왼쪽으로가();
-//			currentBoy.move(x-5,y);
-//			break;
+//				if(key==UP &&
+//						currentBoy.getHeight()>=currentBoy.getY()) {
+//					//background.move(x, y + 2);//배경이 아래로
+//					background.setY(y+2);
+//				}
+//				if(key==DOWN &&
+//						600 - currentBoy.getHeight()<=currentBoy.getY())
+//					background.setY(y-2);
+//				
+//				if(key==LEFT &&
+//						currentBoy.getWidth()>=currentBoy.getX()) 
+//					background.setX(x+2);
+//				
+//				if(key==RIGHT &&
+//						currentBoy.getHeight()<=currentBoy.getX())
+//					background.setX(x-2);                          
+//			}
+//		});
 //
-//		case RIGHT:
-////			currentBoy.오른쪽으로가();
-//			currentBoy.move(x+5,y);
-//			break;
-//
-//		default:
-//
+//		return super.keyDown(evt, key);
 //	}
-		//방법2(더 객체지향스러움)
-		currentBoy.move(key);
-
-		currentBoy.setMoveListener(new BackMoveListener() {
-
-			@Override
-			public void onMove() {
-			//System.out.println(2);
-				double x = background.getX();
-				double y = background.getY();
-
-				if(key==UP &&
-						currentBoy.getHeight()>=currentBoy.getY()) {
-					//background.move(x, y + 2);//배경이 아래로
-					background.setY(y+2);
-				}
-				if(key==DOWN &&
-						600 - currentBoy.getHeight()<=currentBoy.getY())
-					background.setY(y-2);
-				
-				if(key==LEFT &&
-						currentBoy.getWidth()>=currentBoy.getX()) 
-					background.setX(x+2);
-				
-				if(key==RIGHT &&
-						currentBoy.getHeight()<=currentBoy.getX())
-					background.setX(x-2);                          
-			}
-		});
-
-		return super.keyDown(evt, key);
-	}
 
 	@Override
 	public void update(Graphics g) {

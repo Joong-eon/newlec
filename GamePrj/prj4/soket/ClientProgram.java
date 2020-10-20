@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class ClientProgram {
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		Socket sock = new Socket("192.168.0.75", 10000);
+		Socket sock = new Socket("192.168.0.70", 10000);
 		OutputStream nos = sock.getOutputStream();
 		InputStream nis = sock.getInputStream();
 		
@@ -23,7 +23,7 @@ public class ClientProgram {
 			s = scan.nextLine();
 			System.out.print(s);
 			
-			out.println("³ª : " + s);
+			out.println("Supervisor : " + s);
 		}while(!s.equals("bye"));
 		
 		out.close();
