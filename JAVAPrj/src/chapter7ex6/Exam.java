@@ -17,6 +17,11 @@ public class Exam {
 		this.math = math;
 	}
 	
+	@Override
+	public String toString() {
+		return "Exam [kor=" + kor + ", eng=" + eng + ", math=" + math + "]";
+	}
+
 	public int getKor() {
 		return kor;
 	}

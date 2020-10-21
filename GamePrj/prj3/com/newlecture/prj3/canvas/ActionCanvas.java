@@ -17,6 +17,7 @@ import com.newlecture.prj3.entity.Boy;
 import com.newlecture.prj3.entity.Enemy;
 import com.newlecture.prj3.entity.EnemyMoveListener;
 import com.newlecture.prj3.entity.Item;
+import com.newlecture.prj3.entity.Missile;
 import com.newlecture.prj3.entity.sje;
 
 public class ActionCanvas extends Canvas {
@@ -31,7 +32,7 @@ public class ActionCanvas extends Canvas {
 	private Boy currentBoy;
 
 	private Background background;
-//	private Missile[] missiles;
+	private Missile[] missiles;
 	int missileSize = 0;
 
 	private Item[] items;
@@ -75,6 +76,9 @@ public class ActionCanvas extends Canvas {
 		items[3] = boy3;
 		items[4] = enemy;
 		itemSize = 5;
+		
+		missiles = new Missile[100];
+		
 
 		currentBoy = boy1;
 		
@@ -92,7 +96,10 @@ public class ActionCanvas extends Canvas {
 							currentBoy.move(code);
 							break;
 						case KeyEvent.VK_SPACE : 
-//							Missile.missile = currentBoy.fire();
+							Missile missile = currentBoy.fire();
+							items[itemSize++] = missile;
+							missiles[missileSize++] = missile;
+							break;
 				}
 				currentBoy.move(e.getKeyCode());
 				System.out.printf("KeyCode : %d\n", e.getKeyCode());

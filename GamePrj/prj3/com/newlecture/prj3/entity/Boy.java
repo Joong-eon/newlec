@@ -202,4 +202,16 @@ public class Boy extends Item {
 		default:
 		}	
 	}
+
+	public Missile fire() {
+		Missile missile = new Missile();
+		
+		double x = getX();
+		double y = getY();
+		
+		missile.setX(x+20);
+		missile.setY(y-10);
+		
+		return missile;
+	}
 }
