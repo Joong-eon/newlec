@@ -6,8 +6,12 @@ import java.awt.Dimension;
 import java.awt.MenuBar;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -33,6 +37,9 @@ public class ClientFrame extends JFrame {
 	private PaintCanvas canvas;
 	private ChatPanel panel;
 	//	private Button btnSend;
+	protected Scanner nscan;
+	protected PrintStream nout;
+
 
 	public ClientFrame() {
 
@@ -65,21 +72,40 @@ public class ClientFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-					try {
-						socket = new Socket("192.168.0.75",10000);
-					} catch (UnknownHostException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
+				try {
+					socket = new Socket("192.168.0.3",10000);
+					
 					if(socket.isConnected()) {
+
+						InputStream nis = socket.getInputStream();
+						OutputStream nos = socket.getOutputStream();
+						nscan = new Scanner(nis);
+						nout = new PrintStream(nos);
+						//================
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								while(nscan.hasNextLine()){
+									String line = nscan.nextLine();
+									panel.setOutText(line);
+								}
+
+							}
+						}).start();
+						//=================
 						canvas.setActive();
 						panel.setOutText("서버에 연결되었습니다.");
 					}
-	
+
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 

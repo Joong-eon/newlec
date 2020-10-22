@@ -11,13 +11,9 @@ import javax.imageio.ImageIO;
 import com.newlecture.prj3.canvas.ActionCanvas;
 
 public class Missile extends Item {
+	//dependency injection(di)->부품을 껴넣는다.(세터를 만들어서 부품을 주입)
+	private MissileListener listener;
 	
-//	private MissileListener listener;
-//	
-//	public void setListener(MissileListener listener) {
-//		this.listener = listener;
-//	}
-
 	private static Image img; 
 
 	static { 
@@ -45,7 +41,9 @@ public class Missile extends Item {
 
 	@Override
 	public void update() {
-//		listener.onOut()
+		if(null != listener) {
+			listener.onOut(this);
+		}
 		setY(getY()+1);
 	}
 
@@ -63,6 +61,10 @@ public class Missile extends Item {
 //				0, 0, 0+w, h, ActionCanvas.instance);
 		g.setColor(Color.RED);
 		g.fillOval(x1, y1, w, h);
+	}
+
+	public void setListener(MissileListener listener) {
+		this.listener = listener;
 	}
 
 }

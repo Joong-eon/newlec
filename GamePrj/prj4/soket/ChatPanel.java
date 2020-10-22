@@ -6,6 +6,11 @@ import java.awt.Dimension;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class ChatPanel extends Panel {
 	
@@ -32,14 +37,22 @@ public class ChatPanel extends Panel {
 		
 		btnSend = new Button("Send");
 		inputPanel.add(btnSend, BorderLayout.LINE_END);
+		btnSend.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String chatMsg = inputTextBox.getText();
+//				ClientFrame.onSendchat(MSG);
+				
+				
+			}
+		});
 
 	}
 
-	public void setOutText(String string) {
-		// TODO Auto-generated method stub
+	public void setOutText(String message) {
+		textBox.setText(message + "\n\r"); 
+		
 		
 	}
-	
-	
-
 }
