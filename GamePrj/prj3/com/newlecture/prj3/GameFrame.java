@@ -38,16 +38,16 @@ public class GameFrame extends Frame {
 			public void windowClosing(WindowEvent e) {
 						
 				//새로운 창이뜸
-//				int input = JOptionPane.showConfirmDialog(GameFrame.this , "요기가 본문이오", "요기가 제목이오" , JOptionPane.OK_CANCEL_OPTION);
-//				System.out.println(input);
-//				
-//				if(input == JOptionPane.OK_OPTION)
-//					System.exit(0);
+				int input = JOptionPane.showConfirmDialog(GameFrame.this , "요기가 본문이오", "요기가 제목이오" , JOptionPane.OK_CANCEL_OPTION);
+				System.out.println(input);
 				
-				Object[] options = { "굿", "베드" };
-				JOptionPane.showOptionDialog(null, "Click OK to continue", "Warning",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-						null, options, options[0]);
+				if(input == JOptionPane.OK_OPTION)
+					System.exit(0);
+				
+//				Object[] options = { "굿", "베드" };
+//				JOptionPane.showOptionDialog(null, "Click OK to continue", "Warning",
+//						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+//						null, options, options[0]);
 			}
 			
 		});

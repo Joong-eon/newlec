@@ -18,6 +18,7 @@ public class ChatPanel extends Panel {
 	private Panel inputPanel;
 	private TextArea inputTextBox;
 	private Button btnSend;
+	private ChatListener chatListener;
 	
 	public ChatPanel() {
 		setLayout(new BorderLayout());
@@ -36,23 +37,24 @@ public class ChatPanel extends Panel {
 		inputPanel.add(inputTextBox);
 		
 		btnSend = new Button("Send");
-		inputPanel.add(btnSend, BorderLayout.LINE_END);
+		//inputPanel.add(btnSend, BorderLayout.LINE_END);
 		btnSend.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//1.
 				String chatMsg = inputTextBox.getText();
-//				ClientFrame.onSendchat(MSG);
-				
-				
+				chatListener.onSend(chatMsg);
 			}
 		});
-
+		inputPanel.add(btnSend, BorderLayout.LINE_END);
 	}
 
-	public void setOutText(String message) {
-		textBox.setText(message + "\n\r"); 
-		
-		
+	public void setOutText(String msg) {
+		textBox.append(msg + "\n");
+	}
+
+	public void setChatListener(ChatListener chatListener) {
+		this.chatListener = chatListener;
 	}
 }

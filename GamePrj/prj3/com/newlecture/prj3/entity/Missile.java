@@ -41,7 +41,9 @@ public class Missile extends Item {
 
 	@Override
 	public void update() {
-		if(null != listener) {
+		// if내가 밖에 있다면->사라진다.
+		if(listener != null &&
+				ActionCanvas.instance.getHeight()-20>this.getY()) {
 			listener.onOut(this);
 		}
 		setY(getY()+1);

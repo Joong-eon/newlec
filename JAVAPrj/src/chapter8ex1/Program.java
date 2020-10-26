@@ -58,8 +58,8 @@ public class Program {
 		for(Object key : map.keySet())
 			System.out.println("key: " + key + " Value: " + map.get(key));
 		
-//		for(Object value : map.values())
-//			System.out.println(value);
+		for(Object value : map.values())
+			System.out.println(value);
 		
 		//Iterate
 //		ObjectList list = new ObjectList();

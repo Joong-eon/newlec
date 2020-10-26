@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class ClientFrame extends JFrame {
 
@@ -39,6 +40,9 @@ public class ClientFrame extends JFrame {
 	//	private Button btnSend;
 	protected Scanner nscan;
 	protected PrintStream nout;
+	
+	private JMenuItem miSettings;
+	private String nicName;
 
 
 	public ClientFrame() {
@@ -53,6 +57,24 @@ public class ClientFrame extends JFrame {
 
 		mnServer = new JMenu("Server");
 		menuBar.add(mnServer);
+		
+		miSettings = new JMenuItem("Settings");
+		mnFile.add(miSettings);
+		miSettings.addActionListener(new ActionListener() {
+			
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				nicName = JOptionPane.showInputDialog("대화명을 입력하세요");
+			}
+		});
+		
+		
+//		(e)->{
+//			this.nicName = JOptionPane.showInputDialog("대화명을 입력하세요");
+//		};
+
 		//메뉴아이템 생성
 		miExit = new JMenuItem("Exit");
 		mnFile.add(miExit);
@@ -73,7 +95,7 @@ public class ClientFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					socket = new Socket("192.168.0.3",10000);
+					socket = new Socket("192.168.0.73",10000);
 					
 					if(socket.isConnected()) {
 
@@ -120,6 +142,9 @@ public class ClientFrame extends JFrame {
 		panel = new ChatPanel();
 		panel.setPreferredSize(new Dimension(300, 0));
 		add(panel, BorderLayout.LINE_END);
+		panel.setChatListener
+		(chatMsg -> {nout.printf("%s : %s", nicName, chatMsg);}
+		);
 
 		//		btnSend = new Button("Sned");
 		//add(btnSend, BorderLayout.LINE_END);
@@ -133,5 +158,7 @@ public class ClientFrame extends JFrame {
 			}
 
 		});
+		
+		
 	}
 }
