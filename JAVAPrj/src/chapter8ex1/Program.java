@@ -31,11 +31,29 @@ public class Program {
 
 	public static void main(String[] args) {
 		
-		Set set = new HashSet();
-		List list = new ArrayList();
-		Map map = new HashMap();
+		List<ArrayList<Integer>> list1 = new ArrayList<>();  //앞에 Array빼도 됨
+		list1.add(new ArrayList<Integer>());
+		list1.add(new ArrayList<Integer>());
+		list1.add(new ArrayList<Integer>());
+		
+		List<HashMap<Integer,String>> list2 = new ArrayList<>();  
+		list2.add(new HashMap<Integer,String>());
+		list2.add(new HashMap<Integer,String>());
+		list2.add(new HashMap<Integer,String>());
+		
+		
+		
+		
+		GList<Integer> glist = new GList<>();
+		glist.add(7);
+		
+		
+		Set<Object> set = new HashSet<>(); //(최소한의 형태)<-Set<Object> set = new HashSet<Object>();
+		List<Object> list = new ArrayList<>();
+		Map<String,Object> map = new HashMap<>();
 		
 		set.add("haha");
+		set.add(3);
 		set.add(3);
 		set.add(3.0);
 		
@@ -49,7 +67,7 @@ public class Program {
 		for(Object o : set)
 			System.out.println(o);
 		
-		System.out.println(list.get(2));
+		System.out.println(list.get(2)); //변수형이 스트링이라면 System.out.println(list.get(2).split(",")); 가능
 		
 		map.put("번호", 1);
 		map.put("제목", "오늘의 시작은 컬렉션");
@@ -63,14 +81,10 @@ public class Program {
 		
 		//Iterate
 //		ObjectList list = new ObjectList();
-		
 //		ObjectList.ObjectIterator it = list.new ObjectIterator();//바깥쪽 클래스의 인스턴스로 생성
 		
 		//ArrayList list = new ArrayList();
-		
 		//ObjectList.ObjectIterator it = list.iterator();
-		
-		
 		
 //		while(it.hasNext()) //메인 스레드
 //			System.out.println("main " + it.next());
