@@ -1,37 +1,37 @@
-package soket;
+package com.newlecture.prj4;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class ClientConsoleProgram {
 
-	public static void main(String[] args) throws UnknownHostException, IOException {
-		Socket sock = new Socket("192.168.0.3", 10000);
+	public static void main(String[] args) throws IOException {
+		Socket sock = new Socket("192.168.0.70", 10000);
 		OutputStream nos = sock.getOutputStream();
 		InputStream nis = sock.getInputStream();
 
 		PrintStream out = new PrintStream(nos, true);
-		Scanner nscan = new Scanner(nis);
+		String text;
 		Scanner scan = new Scanner(System.in);
-		String s;
+		Scanner scanEcho = new Scanner(nis);
 		do {
-			s = scan.nextLine();
-			System.out.print(s);
 
-			out.println("Supervisor : " + s);
-		}while(!s.equals("bye"));
+			text = scan.nextLine();
 
-		out.close();
+			out.println(text);
+			String echo = scanEcho.nextLine();
+			System.out.println(echo);
+		} while (!text.equals("bye"));
+
 		scan.close();
-		nscan.close();
+		out.close();
 		nis.close();
 		nos.close();
 		sock.close();
 	}
-}
 
+}
